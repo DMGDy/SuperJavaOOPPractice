@@ -11,7 +11,10 @@ fi
 
 # compile project sources
 echo "Compiling project ${PROJECT}..."
-javac -d ${BIN} ${SRC}/*.java
+if ! javac -d ${BIN} ${SRC}/*.java;then
+  echo "Compilation failed due to errors!"
+  exit 1
+fi
 printf "Compilation successful! now running...\n\n"
 
 # run the build in jvm
