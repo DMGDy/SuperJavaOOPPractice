@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 
 // implementing Database Interface with items of type User Account
@@ -21,11 +22,22 @@ public class UserAccountDatabase implements Database<UserAccount,String>{
 
     // keep getting reading an email while they are not valid
     while(ua.setEmail(email) != 0 || containsItem(email)) {
-      email = InputReader.inputString("Please enter a valid and unique email : "); 
+      email = InputReader.inputString("Please enter a valid and unique email: "); 
     }
 
-    ua.setFirstName(InputReader.inputString("Enter first name:"));
-    ua.setLastName(InputReader.inputString("Enter last name:"));
+    String first_name = InputReader.inputString("Enter first name: ");
+    while(first_name.isBlank()) {
+      first_name = InputReader.inputString("First name cannot be empty. Please enter a first name: ");
+    }
+    ua.setFirstName(first_name);
+
+    String last_name = InputReader.inputString("Enter last name: ");
+    while(last_name.isBlank()) {
+      last_name = InputReader.inputString("Last name cannot be empty. Please enter a last name: ");
+    }
+    ua.setLastName(last_name);
+
+    // password can optionally be blank or space characters
     ua.setPassword(InputReader.inputString("Enter a password:"));
 
     db.put(email,ua);
