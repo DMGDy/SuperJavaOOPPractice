@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -72,16 +73,82 @@ public class UserAccountDatabase implements Database<UserAccount,String>{
     return (db.size() == MAX_CAP);
   }
 
+  // First, get all accounts into an array list
+  // determine which field to sort by, create lambda function for sorting by that field
   @Override
-  public void sortAscending() {
+  public void sortAscending(String field) {
+    ArrayList<UserAccount> all_accounts = new ArrayList<>(db.values());
+    switch(field){
+      case "email": {
+        all_accounts.sort((a,b)->{
+          return Character.compare(a.getEmail().charAt(0),b.getEmail().charAt(0));
+        });
+        break;
+      }
+      case "first name": {
+        all_accounts.sort((a,b)->{
+          return Character.compare(a.getFirstName().charAt(0),b.getFirstName().charAt(0));
+        });
+        break;
+      }
+      case "last name": {
+        all_accounts.sort((a,b)->{
+          return Character.compare(a.getLastName().charAt(0),b.getLastName().charAt(0));
+        });
+        break;
+      }
+    }
+    System.out.println("Showing sorted database:");
+    for(UserAccount account: all_accounts) {
+      account.displayUserAccount();
+    }
+
+  }
+
+  /* Similar to sortAscending, mulitply the result of the compare
+   * by -1 to sort in the oposite order
+   *
+   */
+  @Override
+  public void sortDescending(String field) {
+    ArrayList<UserAccount> all_accounts = new ArrayList<>(db.values());
+    switch(field){
+      case "email": {
+        all_accounts.sort((a,b)->{
+          return -1 * Character.compare(a.getEmail().charAt(0),b.getEmail().charAt(0));
+        });
+        System.out.println("Showing sorted database:");
+        for(UserAccount account: all_accounts) {
+          account.displayUserAccount();
+        }
+        break;
+      }
+      case "first name": {
+        all_accounts.sort((a,b)->{
+          return -1 * Character.compare(a.getFirstName().charAt(0),b.getFirstName().charAt(0));
+        });
+        System.out.println("Showing sorted database:");
+        for(UserAccount account: all_accounts) {
+          account.displayUserAccount();
+        }
+        break;
+      }
+      case "last name": {
+        all_accounts.sort((a,b)->{
+          return -1*  Character.compare(a.getLastName().charAt(0),b.getLastName().charAt(0));
+        });
+        System.out.println("Showing sorted database:");
+        for(UserAccount account: all_accounts) {
+          account.displayUserAccount();
+        }
+        break;
+      }
+    }
+
+    //sort the array by alphabetical order
+    // use lambda function inside sort to 
     // TODO: sort db by ascending alphabet
   }
-
-  @Override
-  public void sortDescending() {
-    // TODO: sort db by descending alphabet
-  }
-
   /* Check if database has the provided email
    */
   @Override

@@ -10,8 +10,8 @@ public interface Database<T,K> {
   public void showItem(K identifier);
   public void removeItem(K identifier);
   public void showAll();
-  public void sortAscending();
-  public void sortDescending();
+  public void sortAscending(String field);
+  public void sortDescending(String field);
   public boolean isEmpty();
   public boolean isFull();
   public boolean containsItem(K identifier);

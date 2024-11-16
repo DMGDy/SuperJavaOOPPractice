@@ -18,7 +18,7 @@ public class UserInterface {
       displayMenu();
 
       // read the selected option the user entered
-      String option = InputReader.inputString("Enter option: ");
+      String option = InputReader.inputString("Enter option: ").trim();
 
       // return code for Database controller method calls to display status
       int rc = 0;
@@ -51,7 +51,7 @@ public class UserInterface {
         // delete has its own scope as well to avoid use of a local variable 
         case "delete": {
           String email = InputReader.inputString("Enter account email you wish to delete: ");
-          rc = dbcontroller.edit(email);
+          rc = dbcontroller.delete(email);
           switch(rc) {
             case(0):
               System.out.printf("Account with email \"%s\" successfully deleted.\n",email);
@@ -87,6 +87,15 @@ public class UserInterface {
         case "quit":
           InputReader.endReader();
           return;
+        case "sorted-show-all": {
+          String field = InputReader.inputString("Enter what field you want to sort by (email, last name, first name): ");
+          String order = InputReader.inputString("Would you like in-order or reversed? (enter \"in-order\" or \"reversed\") ");
+          rc = dbcontroller.sortedShowAll(field,order);
+          if(rc == -1) {
+            System.out.println("Databse currently contains no user accounts to show!");
+          }
+          break;
+        }
         //otherwise option provided by user is undefined, let user know and retry input
         default:
           System.out.printf("Unknown option \"%s\" provided. Please enter a valid menu option.",option);
@@ -107,7 +116,7 @@ public class UserInterface {
       System.out.println("\tupdate: Updates an existing user's account password with the provided email");
       System.out.println("\tdelete: Deletes an user account with the given email");
       System.out.println("\tshow-account: Displays the account with the given email");
-      System.out.println("\tshow-all: Choose how accounts will be sorted when displayed, then display all accounts inside database");
+      System.out.println("\tsorted-show-all: Choose how accounts will be sorted when displayed, then display all accounts inside database");
       System.out.println("\tquit: Quit the program");
   }
 

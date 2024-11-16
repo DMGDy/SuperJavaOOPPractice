@@ -18,6 +18,15 @@ public class UserAccount {
     this.last_name = name;
   }
 
+  public String getLastName() {
+    return this.last_name;
+  }
+
+  public String getFirstName() {
+    return this.first_name;
+  }
+
+
   public int setEmail(String email) {
 
     // check if email is valid or not

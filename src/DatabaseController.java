@@ -18,7 +18,7 @@ public class DatabaseController<K> {
   }
 
   public int showAll() {
-    if(!db.isEmpty()) {
+    if(db.isEmpty()) {
       return -1;
     }
     db.showAll();
@@ -52,6 +52,19 @@ public class DatabaseController<K> {
       db.removeItem(identifier);
       return 0;
     }
+  }
+
+  // Show all the database items given the field to sort by and the order (in-order or reversed)
+  public int sortedShowAll(String field, String order) {
+    if(db.isEmpty()) { return -1; }
+    switch(order) {
+      case "in-order":
+        db.sortAscending(field);
+        break;
+      case "reversed":
+        break;
+    }
+    return 0;
   }
 
 
